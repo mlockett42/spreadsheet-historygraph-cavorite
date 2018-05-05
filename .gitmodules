@@ -1,0 +1,9 @@
+[submodule "cavorite"]
+	path = cavorite
+	url = https://github.com/mlockett42/cavorite.git
+[submodule "historygraph"]
+	path = historygraph
+	url = https://github.com/historygraphio/historygraph.git
+[submodule "pypys-release/pypyjs-release-nojit"]
+	path = pypys-release/pypyjs-release-nojit
+	url = https://github.com/pypyjs/pypyjs-release-nojit.git
