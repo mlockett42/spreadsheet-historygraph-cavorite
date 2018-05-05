@@ -4,8 +4,8 @@
 [submodule "historygraph"]
 	path = historygraph
 	url = https://github.com/historygraphio/historygraph.git
-[submodule "pypys-release/pypyjs-release-nojit"]
-	path = pypys-release/pypyjs-release-nojit
+[submodule "pypyjs-release/pypyjs-release-nojit"]
+	path = pypyjs-release/pypyjs-release-nojit
 	url = https://github.com/pypyjs/pypyjs-release-nojit.git
 [submodule "python-rsa"]
 	path = python-rsa
