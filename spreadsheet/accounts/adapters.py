@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals, print_function
 from allauth.account.adapter import DefaultAccountAdapter
 
 
-class SpreadshaeetAdapter(DefaultAccountAdapter):
+class SpreadsheetAdapter(DefaultAccountAdapter):
     def populate_username(self, request, user):
         # Override because we dont use the username field
         """
