@@ -17,5 +17,9 @@ from django.conf.urls import url
 from django.contrib import admin
 
 urlpatterns = [
+    # Landing Page
+    url(r'^', include('landingpage.urls')),
+
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include('allauth.urls')),
 ]

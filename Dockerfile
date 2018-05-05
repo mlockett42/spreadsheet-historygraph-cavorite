@@ -47,6 +47,6 @@ ENV PYTHONWARNINGS d
 # Entrypoint
 # Also need
 EXPOSE 8000-8100
-WORKDIR /opt/project/
+WORKDIR /opt/project/spreadsheet
 ENTRYPOINT ["/opt/project/run-django"]
 CMD ["check"]

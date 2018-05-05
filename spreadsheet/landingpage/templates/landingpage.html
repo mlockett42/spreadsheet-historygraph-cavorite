@@ -1,0 +1,90 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Spreadsheet</title>
+  <!-- Custom fonts for this template-->
+  <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <!-- <link href="/static/css/bc-custom.css" type="text/css" rel="stylesheet">  -->
+  <!-- Code Mirror CSS -->
+  <link href="/static/css/landingpage.css" type="text/css" rel="stylesheet">
+  <script src="/static/jquery/jquery.min.js"></script>
+
+</head>
+<body class="fixed-nav sticky-footer" id="page-top" data-current-user-public-key='{{current_user_public_key}}' {% block bodyattributes %}{% endblock %}>
+  <div class="loading-screen">
+    <div class="container-fluid">
+      <div class="loader-items">
+        <!-- Loading square for squar.red network -->
+        <span class="loader"><span class="loader-inner"></span></span>
+        <h3>Loading..</h3>
+      </div>
+    </div>
+  </div>
+
+<script src="/static/pypyjs-release-nojit/lib/Promise.min.js" type="text/javascript" charset="utf-8" onerror="JavaScript:alert('Error loading file ['+this.src+'] !');"></script>
+<script src="/static/pypyjs-release-nojit/lib/FunctionPromise.js" type="text/javascript" charset="utf-8" onerror="JavaScript:alert('Error loading file ['+this.src+'] !');"></script>
+<script src="/static/pypyjs-release-nojit/lib/pypyjs.js" type="text/javascript" charset="utf-8" onerror="JavaScript:alert('Error loading file ['+this.src+'] !');"></script>
+<script type="text/javascript" charset="utf-8">
+try {
+    jQuery(document);
+} catch (e) {
+    alert("Error, jQuery JS not loaded!\n Original error was:" + e);
+}
+function console_exec(code) {
+    pypyjs.exec(code).then(function() {
+        console.log("OK");
+    }, function (err) {
+        // err is an instance of PyPyJS.Error
+        console.log("ERROR: "+err.name+": "+err.message+"!)");
+        pypyjs.stderr(err.trace); // the human-readable traceback, as a string
+    });
+}
+document.print_to_secondary_output = false;
+$(function () {
+    //out = $("#output");
+
+    function python_output(data) {
+        console.log(data);
+        if (document.print_to_secondary_output) {
+            secondary_out = $('#secondary-output')
+            secondary_out.append(data);
+            console_editor = $('#console')
+            console_editor.scrollTop(secondary_out.prop("scrollHeight")); // scoll down
+        };
+    };
+
+    pypyjs.stdout = pypyjs.stderr = python_output
+    pypyjs.stdout.reset = pypyjs.stderr.reset = function(data) {
+    }
+
+    function status_printout(data) {
+        console.log(data);
+    };
+
+    // Display a helpful message and twiddle thumbs as it loads.
+    status_printout("Loading PyPy.js.\n\n");
+    status_printout('It\'s big, so this might take a while...');
+    var pseudo_status = setInterval(function(){ pypyjs.stdout("."); }, 500);
+
+    pypyjs.ready().then(function() {
+        clearInterval(pseudo_status);
+        pypyjs.stdout.reset();
+
+        pypyjs.stdout("load '{{ boot_file }}'...");
+        $.get( "/static/front-end/{{ boot_file }}", function( data ) {
+            console_exec( data );
+        }).done(function() {
+            status_printout("OK\n");
+        }).fail(function() {
+            status_printout("error!");
+        });
+    });
+});
+
+</script>
+</body>
+</html>
