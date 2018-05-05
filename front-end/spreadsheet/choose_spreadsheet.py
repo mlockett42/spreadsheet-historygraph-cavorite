@@ -19,7 +19,7 @@ def get_public_key():
 class ChooseSpreadsheetView(div):
     def __init__(self, *args, **kwargs):
         set_public_key(str(js.globals.document.body.getAttribute('data-current-user-public-key')))
-        super(ChooseGameView, self).__init__(*args, **kwargs)
+        super(ChooseSpreadsheetView, self).__init__(*args, **kwargs)
 
     def onclick_new_passphrase(self, e):
         print('onclick_new_passphrase called')
