@@ -7,3 +7,6 @@
 [submodule "pypys-release/pypyjs-release-nojit"]
 	path = pypys-release/pypyjs-release-nojit
 	url = https://github.com/pypyjs/pypyjs-release-nojit.git
+[submodule "python-rsa"]
+	path = python-rsa
+	url = https://github.com/mlockett42/python-rsa.git
