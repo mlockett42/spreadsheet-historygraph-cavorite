@@ -45,6 +45,7 @@ def run(**kwargs):
               '--interactive '
               '--publish=8000:8000 '
               '--volume "{local_pwd}":/opt/project '
+              #'--volume "/home/mark/python-rsa":/opt/project/python-rsa '
               #'--volume "/home/mark/cavorite":/opt/project/cavorite '
               #'--network={project_name}-network '
               #'--network-alias=webserver '

@@ -5,6 +5,7 @@ except ImportError:
     js = None
 from cavorite.HTML import *
 import rsa
+import random
 
 _public_key = None
 
@@ -22,14 +23,24 @@ class ChooseSpreadsheetView(div):
         super(ChooseSpreadsheetView, self).__init__(*args, **kwargs)
 
     def onclick_new_passphrase(self, e):
-        print('onclick_new_passphrase called')
+        def custom_random(bytes):
+            l = [random.randrange(256) for i in xrange(bytes)]
+            return str(bytearray(l))
+        rsa.set_custom_urandom(custom_random)
+        passphrase = str(js.globals.document.getElementById('id_new_passphrase_input').value)
+        random.seed(passphrase)
+        (pubkey, privkey) = rsa.newkeys(512)
+        print('Random pubkey/private key generateed. ')
+        print('pubkey=', pubkey)
+        print('privkey=', privkey)
+        print('Sending public key to the server')
 
     def get_children(self):
         if get_public_key() == '':
             return [
                      p('You haven''t set up your key yet'),
                      p('Please enter a passphrase to generate your key'),
-                     html_input(),
+                     html_input({'id': 'id_new_passphrase_input'}),
                      html_button({'onclick': self.onclick_new_passphrase}, 'Submit') 
                    ]
         else:
