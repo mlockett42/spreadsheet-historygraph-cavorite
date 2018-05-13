@@ -8,6 +8,7 @@ import rsa
 import random
 from cavorite.ajaxget import ajaxpost
 import base64
+from cavorite import SimpleProxy
 
 
 _public_key = None
@@ -42,7 +43,7 @@ def new_keys_from_passphrase(passphrase):
     print('privkey=', privkey)
     return (pubkey, privkey)
 
-class ChooseSpreadsheetView(div):
+class ChooseSpreadsheetView(SimpleProxy):
     def __init__(self, *args, **kwargs):
         set_public_key(str(js.globals.document.body.getAttribute('data-current-user-public-key')))
         super(ChooseSpreadsheetView, self).__init__(*args, **kwargs)
@@ -71,23 +72,22 @@ class ChooseSpreadsheetView(div):
         else:
             print('public keys do not match')
 
-    def get_children(self):
+    def get_proxy(self):
         if get_public_key() == '':
-            return [
-                     p('You haven''t set up your key yet'),
-                     p('Please enter a passphrase to generate your key'),
-                     html_input({'id': 'id_new_passphrase_input'}),
-                     html_button({'onclick': self.onclick_new_passphrase}, 'Submit') 
-                   ]
+            return div([
+                         p('You haven''t set up your key yet'),
+                         p('Please enter a passphrase to generate your key'),
+                         html_input({'id': 'id_new_passphrase_input'}),
+                         html_button({'onclick': self.onclick_new_passphrase}, 'Submit') 
+                       ])
         elif get_private_key() is None:
-            return [ 
-                     p('You have generated a key previously. Please enter your passphrase to continue') ,
-                     html_input({'id': 'id_new_passphrase_input'}),
-                     html_button({'onclick': self.onclick_existing_passphrase}, 'Submit') 
-                   ]
+            return div([
+                         p('You have generated a key previously. Please enter your passphrase to continue') ,
+                         html_input({'id': 'id_new_passphrase_input'}),
+                         html_button({'onclick': self.onclick_existing_passphrase}, 'Submit') 
+                       ])
         else:
-            return [ p('Congratulations you are logged in and your key is set up correctly') ]
-
+            return div([ p('Congratulations you are logged in and your key is set up correctly') ])
 
 def choose_spreadsheet_view():
     return ChooseSpreadsheetView()
