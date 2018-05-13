@@ -81,12 +81,12 @@ class ChooseSpreadsheetView(div):
                    ]
         elif get_private_key() is None:
             return [ 
-                     p('Your have generated a key previously. Please enter your passphrase to continue') ,
+                     p('You have generated a key previously. Please enter your passphrase to continue') ,
                      html_input({'id': 'id_new_passphrase_input'}),
                      html_button({'onclick': self.onclick_existing_passphrase}, 'Submit') 
                    ]
         else:
-            return [ p('Congratulations you are logged in and your key is set up correctlyv') ]
+            return [ p('Congratulations you are logged in and your key is set up correctly') ]
 
 
 def choose_spreadsheet_view():
