@@ -2,6 +2,7 @@
 python /opt/project/pypyjs-release/pypyjs-release-nojit/tools/module_bundler.py add /opt/project/pypyjs-release/pypyjs-release-nojit/lib/modules/ /opt/project/cavorite/cavorite/
 python /opt/project/pypyjs-release/pypyjs-release-nojit/tools/module_bundler.py add /opt/project/pypyjs-release/pypyjs-release-nojit/lib/modules/ /opt/project/historygraph/historygraph/
 python /opt/project/pypyjs-release/pypyjs-release-nojit/tools/module_bundler.py add /opt/project/pypyjs-release/pypyjs-release-nojit/lib/modules/ /opt/project/python-rsa/rsa/
+python /opt/project/pypyjs-release/pypyjs-release-nojit/tools/module_bundler.py add /opt/project/pypyjs-release/pypyjs-release-nojit/lib/modules/ /opt/project/pyasn1/pyasn1/
 python /opt/project/pypyjs-release/pypyjs-release-nojit/tools/module_bundler.py add /opt/project/pypyjs-release/pypyjs-release-nojit/lib/modules/ /opt/project/front-end/spreadsheet/
 python /opt/project/spreadsheet/manage.py $*
 

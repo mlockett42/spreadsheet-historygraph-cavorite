@@ -20,6 +20,9 @@ urlpatterns = [
     # Landing Page
     url(r'^', include('landingpage.urls')),
 
+    # API
+    url(r'^api/', include('api.urls')),
+
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('allauth.urls')),
 ]

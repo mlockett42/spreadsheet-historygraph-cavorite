@@ -10,3 +10,6 @@
 [submodule "python-rsa"]
 	path = python-rsa
 	url = https://github.com/mlockett42/python-rsa.git
+[submodule "pyasn1"]
+	path = pyasn1
+	url = https://github.com/etingof/pyasn1.git
