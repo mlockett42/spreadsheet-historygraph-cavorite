@@ -102,3 +102,6 @@ ENV/
 
 # Database
 spreadsheet/db.sqlite3
+
+spreadsheet/public/
+

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
 
 urlpatterns = [
     # Landing Page
@@ -26,3 +27,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('allauth.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [url(r'^storage/', include('development_storage.urls'))]

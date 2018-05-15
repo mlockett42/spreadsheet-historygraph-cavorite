@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'accounts',
+    'development_storage',
     'landingpage',
 ]
 
@@ -161,4 +162,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
+STORAGE_FILES_ROOT = os.path.join(BASE_DIR, 'public/storage')
 
