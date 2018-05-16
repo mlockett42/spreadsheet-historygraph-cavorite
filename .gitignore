@@ -103,5 +103,9 @@ ENV/
 # Database
 spreadsheet/db.sqlite3
 
+# Hide the public data
 spreadsheet/public/
+
+# Don't check in the copied around documents file
+spreadsheet/historygraph_backend/documents/documents.py
 

@@ -134,5 +134,8 @@ def create_symlinks():
     with lcd('./spreadsheet/spreadsheet/settings'):
         local('rm -rf ./__init__.py')
         local('ln -s ./development.py ./__init__.py')
+    with lcd('./spreadsheet/historygraph_backend/documents'):
+        local('rm -rf ./documents.py')
+        local('ln -s ./historygraph_shared/documents.py ./documents.py')
 
 

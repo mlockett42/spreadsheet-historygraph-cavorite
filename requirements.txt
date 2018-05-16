@@ -8,6 +8,7 @@ djangorestframework==3.7.7
 #mock==2.0.0
 #backports.tempfile==1.0
 psycopg2==2.7.4
+rsa==3.4.2
 
 # General requirements for testing
 #selenium==3.5.0
