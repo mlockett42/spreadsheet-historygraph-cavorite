@@ -1,5 +1,5 @@
-# Checkers HistoryGraph Cavorite
-An end to end encrypted checkers game run in browser and use HistoryGraph and Cavorite
+# Spreadsheet HistoryGraph Cavorite
+An end to end encrypted spreadsheet application run in browser and use HistoryGraph and Cavorite
 
 First create a virtual environment
 
