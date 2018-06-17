@@ -9,6 +9,8 @@ import random
 from cavorite.ajaxget import ajaxpost
 import base64
 from cavorite import SimpleProxy
+from cavorite.timeouts import set_timeout
+from .main_screen import MainScreen
 
 
 _public_key = None
@@ -46,7 +48,12 @@ def new_keys_from_passphrase(passphrase):
 class ChooseSpreadsheetView(SimpleProxy):
     def __init__(self, *args, **kwargs):
         set_public_key(str(js.globals.document.body.getAttribute('data-current-user-public-key')))
+        self.display_main_screen = False
         super(ChooseSpreadsheetView, self).__init__(*args, **kwargs)
+
+    def change_to_main_screen(self):
+        self.display_main_screen = True
+        self.mount_redraw()
 
     def onclick_new_passphrase(self, e):
         (pubkey, privkey) = new_keys_from_passphrase(str(js.globals.document.getElementById('id_new_passphrase_input').value))
@@ -58,6 +65,7 @@ class ChooseSpreadsheetView(SimpleProxy):
             print('ajaxpost_result_handler called')
             set_public_key(pubkey)
             set_private_key(privkey)
+            set_timeout(self.change_to_main_screen, 2000)
             self.mount_redraw()
         ajaxpost('/api/accounts/setpublickey/', form_data, ajaxpost_result_handler)
 
@@ -68,6 +76,7 @@ class ChooseSpreadsheetView(SimpleProxy):
             print('Public keys match')
             set_public_key(pubkey)
             set_private_key(privkey)
+            set_timeout(self.change_to_main_screen, 2000)
             self.mount_redraw()
         else:
             print('public keys do not match')
@@ -86,8 +95,10 @@ class ChooseSpreadsheetView(SimpleProxy):
                          html_input({'id': 'id_new_passphrase_input'}),
                          html_button({'onclick': self.onclick_existing_passphrase}, 'Submit') 
                        ])
-        else:
+        elif self.display_main_screen:
             return div([ p('Congratulations you are logged in and your key is set up correctly') ])
+        else:
+            return MainScreen()
 
 def choose_spreadsheet_view():
     return ChooseSpreadsheetView()
