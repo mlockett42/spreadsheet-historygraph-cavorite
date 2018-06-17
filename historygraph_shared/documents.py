@@ -1,35 +1,31 @@
 from historygraph_wrapper import DocumentCollection
 from historygraph_wrapper import Document
 from historygraph_wrapper import DocumentObject
-from historygraph_wrapper import FieldText
-from historygraph_wrapper import FieldIntRegister
-from historygraph_wrapper import FieldIntCounter
-from historygraph_wrapper import FieldList
-from historygraph_wrapper import FieldCollection
+from historygraph_wrapper import fields
 
 
 dc1 = DocumentCollection()
 
 class SpreadsheetCell(DocumentObject):
-    content = FieldText()
+    content = fields.CharRegister()
 
 class SpreadsheetColumn(Document):
-    name = FieldText()
-    items = FieldList(SpreadsheetCell)
+    name = fields.CharRegister()
+    cells = fields.List(SpreadsheetCell)
 
 class SpreadsheetShare(DocumentObject):
-    email = FieldText()
+    email = fields.CharRegister()
 
 class Spreadsheet(Document):
-    name = FieldText()
-    lists = FieldList(TrelloListLink)
-    shares = FieldCollection(TrelloShare)
+    name = fields.CharRegister()
+    columns = fields.List(SpreadsheetColumn)
+    shares = fields.Collection(SpreadsheetShare)
 
-def CreateNewDocumentCollection(dcid):
-    dc = DocumentCollection(dcid)
-    dc.Register(Spreadsheet)
-    dc.Register(SpreadsheetColumn)
-    dc.Register(SpreadsheetCell)
-    dc.Register(SpreadsheetShare)
+def CreateNewDocumentCollection():
+    dc = DocumentCollection()
+    dc.register(Spreadsheet)
+    dc.register(SpreadsheetColumn)
+    dc.register(SpreadsheetCell)
+    dc.register(SpreadsheetShare)
     return dc
 

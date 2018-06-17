@@ -136,6 +136,6 @@ def create_symlinks():
         local('ln -s ./development.py ./__init__.py')
     with lcd('./spreadsheet/historygraph_backend/documents'):
         local('rm -rf ./documents.py')
-        local('ln -s ./historygraph_shared/documents.py ./documents.py')
+        local('ln -s ../../../historygraph_shared/documents.py ./documents.py')
 
 
