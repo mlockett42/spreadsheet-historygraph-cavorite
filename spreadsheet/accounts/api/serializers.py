@@ -11,3 +11,9 @@ class PublicKeySerialiser(serializers.ModelSerializer):
         model = User
         fields = ('public_key', )
 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email', 'public_key')
+

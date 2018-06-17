@@ -6,6 +6,7 @@ from . import views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
+    url(r'^$', views.UserList.as_view(), name='user-list'),
     url(r'^setpublickey/$', views.SetPublicKeyView.as_view(), name='set-public-key'),
 ]
 
