@@ -48,21 +48,24 @@ def new_keys_from_passphrase(passphrase):
 
 class ChooseSpreadsheetView(SimpleProxy):
     def __init__(self, *args, **kwargs):
+        print('ChooseSpreadsheetView __init__ called')
         set_public_key(str(js.globals.document.body.getAttribute('data-current-user-public-key')))    
         self.display_main_screen = False
         super(ChooseSpreadsheetView, self).__init__(*args, **kwargs)
 
     def change_to_main_screen(self):
+        print('Updating screen after timeout self=', self)
         self.display_main_screen = True
         self.mount_redraw()
 
-    def load_user_list(self):
-        def users_result_handler(xmlhttp, response):
-            if xmlhttp.status >= 200 and xmlhttp.status <= 299:
-                myglobals.set_users(json.loads(str(xmlhttp.responseText)))
-                self.mount_redraw()
+    def users_result_handler(self, xmlhttp, response):
+        if xmlhttp.status >= 200 and xmlhttp.status <= 299:
+            print('User list retreived', ' self=', self)
+            myglobals.set_users(json.loads(str(xmlhttp.responseText)))
+            self.mount_redraw()
 
-        ajaxget('/api/accounts/', users_result_handler)
+    def load_user_list(self):
+        ajaxget('/api/accounts/', self.users_result_handler)
 
 
     def onclick_new_passphrase(self, e):
@@ -75,7 +78,7 @@ class ChooseSpreadsheetView(SimpleProxy):
             print('ajaxpost_result_handler called')
             set_public_key(pubkey)
             set_private_key(privkey)
-            set_timeout(self.change_to_main_screen, 2000)
+            set_timeout(self.change_to_main_screen, 1000)
             self.load_user_list()
             self.mount_redraw()
         ajaxpost('/api/accounts/setpublickey/', form_data, ajaxpost_result_handler)
@@ -87,13 +90,14 @@ class ChooseSpreadsheetView(SimpleProxy):
             print('Public keys match')
             set_public_key(pubkey)
             set_private_key(privkey)
-            set_timeout(self.change_to_main_screen, 2000)
+            set_timeout(self.change_to_main_screen, 1000)
             self.load_user_list()
             self.mount_redraw()
         else:
             print('public keys do not match')
 
     def get_proxy(self):
+        #print('get_proxy called self.display_main_screen=', self.display_main_screen, ' self=', self)
         global display_main_screen
         if get_public_key() == '':
             return div([
@@ -109,8 +113,10 @@ class ChooseSpreadsheetView(SimpleProxy):
                          html_button({'onclick': self.onclick_existing_passphrase}, 'Submit') 
                        ])
         elif not self.display_main_screen:
+            #print('1 get_proxy')
             return div([ p('Congratulations you are logged in and your key is set up correctly') ])
         else:
+            #print('2 get_proxy')
             return MainScreen()
 
 def choose_spreadsheet_view():

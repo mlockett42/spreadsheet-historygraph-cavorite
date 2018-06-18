@@ -9,6 +9,16 @@ from . import myglobals
 
 class MainScreen(div):
     def get_children(self):
-        return [ p('Users') ] + [p(u['email']) for u in myglobals.get_users()]
+        #print('MainScreen get_children')
+        ret = [ p('Users')  ] + list([p(u['email']) for u in myglobals.get_users()])
+        #print('MainScreen get_children ret=', ret)
+        #print('MainScreen user names = ', [u['email'] for u in myglobals.get_users()])
+        return ret
+
+    def get_attribs(self):
+        #print('MainScreen get_attribs called')
+        attribs = super(MainScreen, self).get_attribs()
+        attribs['class'] = 'main-screen'
+        return attribs
 
 
