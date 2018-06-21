@@ -117,7 +117,7 @@ class ChooseSpreadsheetView(SimpleProxy):
             return div([ p('Congratulations you are logged in and your key is set up correctly') ])
         else:
             #print('2 get_proxy')
-            return MainScreen()
+            return MainScreen(self)
 
 def choose_spreadsheet_view():
     return ChooseSpreadsheetView()
