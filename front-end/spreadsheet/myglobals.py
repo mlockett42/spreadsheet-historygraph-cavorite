@@ -11,3 +11,13 @@ def get_users():
     global _users
     return _users
 
+_dc = None
+
+def set_dc(dc):
+    global _dc
+    _dc = dc
+
+def get_dc():
+    global _dc
+    return _dc
+

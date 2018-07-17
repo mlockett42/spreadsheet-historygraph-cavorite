@@ -45,6 +45,7 @@ def run(**kwargs):
               '--interactive '
               '--publish=8000:8000 '
               '--volume "{local_pwd}":/opt/project '
+              #'--volume "/home/mark/historygraph":/opt/project/historygraph '
               #'--volume "/home/mark/python-rsa":/opt/project/python-rsa '
               #'--volume "/home/mark/cavorite":/opt/project/cavorite '
               #'--network={project_name}-network '
@@ -135,6 +136,9 @@ def create_symlinks():
         local('rm -rf ./__init__.py')
         local('ln -s ./development.py ./__init__.py')
     with lcd('./spreadsheet/historygraph_backend/documents'):
+        local('rm -rf ./documents.py')
+        local('ln -s ../../../historygraph_shared/documents.py ./documents.py')
+    with lcd('./front-end/historygraph_frontend/documents'):
         local('rm -rf ./documents.py')
         local('ln -s ../../../historygraph_shared/documents.py ./documents.py')
 

@@ -48,13 +48,13 @@ def new_keys_from_passphrase(passphrase):
 
 class ChooseSpreadsheetView(SimpleProxy):
     def __init__(self, *args, **kwargs):
-        print('ChooseSpreadsheetView __init__ called')
+        #print('ChooseSpreadsheetView __init__ called')
         set_public_key(str(js.globals.document.body.getAttribute('data-current-user-public-key')))    
         self.display_main_screen = False
         super(ChooseSpreadsheetView, self).__init__(*args, **kwargs)
 
     def change_to_main_screen(self):
-        print('Updating screen after timeout self=', self)
+        #print('Updating screen after timeout self=', self)
         self.display_main_screen = True
         self.mount_redraw()
 

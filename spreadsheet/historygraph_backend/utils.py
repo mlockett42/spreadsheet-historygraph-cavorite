@@ -19,6 +19,7 @@ def create_public_spreadsheet():
             cell = SpreadsheetCell()
             col.cells.append(cell)
             dc.add_document_object(cell)
+            cell.content = '{}{}'.format('ABCDE'[i], j + 1)
 
     for edge in dc.get_all_edges()[0]:
         json_text = json.dumps(edge)
