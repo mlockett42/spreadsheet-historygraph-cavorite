@@ -6,6 +6,7 @@ import hashlib
 from StringIO import StringIO
 
 def create_public_spreadsheet():
+    #TODO: Make this into a management command
     from historygraph_backend.documents.documents import CreateNewDocumentCollection, Spreadsheet, SpreadsheetColumn, SpreadsheetCell
 
     dc = CreateNewDocumentCollection()
@@ -23,6 +24,5 @@ def create_public_spreadsheet():
 
     for edge in dc.get_all_edges()[0]:
         json_text = json.dumps(edge)
-        message_media_storage.save('public/{0}'.format( 
+        message_media_storage.save('public/{0}'.format(
                                    hashlib.sha256(json_text).hexdigest()), StringIO(json_text))
-

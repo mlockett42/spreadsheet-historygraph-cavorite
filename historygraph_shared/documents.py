@@ -9,7 +9,7 @@ dc1 = DocumentCollection()
 class SpreadsheetCell(DocumentObject):
     content = fields.CharRegister()
 
-class SpreadsheetColumn(Document):
+class SpreadsheetColumn(DocumentObject):
     name = fields.CharRegister()
     cells = fields.List(SpreadsheetCell)
 
@@ -28,4 +28,3 @@ def CreateNewDocumentCollection():
     dc.register(SpreadsheetCell)
     dc.register(SpreadsheetShare)
     return dc
-
