@@ -13,9 +13,11 @@ from rest_framework import status
 from rest_framework.mixins import UpdateModelMixin
 import copy
 from django.http import Http404
-from .serializers import HistoryGraphSerializer
+from .serializers import HistoryGraphSerializer, HistoryGraphGetSerializer
 import json
 import hashlib
+import os
+from django.conf import settings
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -30,10 +32,21 @@ class HistoryGraphView(APIView):
     def post(self, request, format=None):
         serializer = HistoryGraphSerializer(data=request.data, many=True)
         if serializer.is_valid():
-            message_media_storage.save('private/{0}/{1}'.format(serializer.validated_data['receipient'], 
+            message_media_storage.save('private/{0}/{1}'.format(serializer.validated_data['receipient'],
                                        hashlib.sha256(serializer.validated_data['content']).hexdigest()),
                                        serializer.validated_data['content'])
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class HistoryGraphListView(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    def get(self, request, recipient, format=None):
+        if recipient == 'public':
+            full_path = os.path.join(settings.STORAGE_FILES_ROOT, 'public')
+            file_names = [f for f in os.listdir(full_path)]
+
+            return Response(file_names)
+        return Response([])

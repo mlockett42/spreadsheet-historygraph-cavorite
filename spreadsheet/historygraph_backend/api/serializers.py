@@ -23,3 +23,6 @@ class HistoryGraphSerializer(serializers.Serializer):
             return value
 
         raise serializers.ValidationError("Incorrectly formatted request")
+
+class HistoryGraphGetSerializer(serializers.Serializer):
+    receipient = serializers.CharField()

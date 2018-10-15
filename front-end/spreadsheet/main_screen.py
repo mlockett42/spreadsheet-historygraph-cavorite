@@ -81,6 +81,10 @@ class MainScreen(div):
         attribs['class'] = 'main-screen'
         return attribs
 
+    def public_sheet_edge_downloaded2(self, xmlhttp, response, key):
+        edge_names = json.loads(str(xmlhttp.responseText))
+        print('edge_names=', edge_names)
+
     def public_sheet_edge_downloaded(self, xmlhttp, response, key):
         global active_downloads
         active_downloads -= 1
@@ -115,11 +119,13 @@ class MainScreen(div):
                 key = str(key_element.childNodes[0].nodeValue)
                 #print('Found key = ', key)
                 if key not in downloaded_public_sheet_edges:
-                    #ajaxget('/storage/public/' + key, lambda xmlhttp, response, key=key: self.public_sheet_edge_downloaded(xmlhttp, response, key))
+                    ajaxget('/api/historygraph/list/public', lambda xmlhttp, response, key=key: self.public_sheet_edge_downloaded2(xmlhttp, response, key))
+                    """
                     global download_queue, tickle_downloads
                     download_queue.append((key, lambda xmlhttp, response, key=key: self.public_sheet_edge_downloaded(xmlhttp, response, key)))
                     downloaded_public_sheet_edges.add(key)
                     tickle_downloads()
+                    """
                 else:
                     pass
                     #print('key=', key, ' already downloaded skippign')
