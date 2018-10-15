@@ -1,16 +1,15 @@
-django==1.11.13
-django-allauth==0.35.0
+django==1.11.16
+django-allauth==0.38.0
 #pytest-django==3.1.2
 #django-mptt==0.8.7
 #git+https://github.com/BinaryCrate/behave-django.git@50450684840d66d34c3bd121aa5b75b46f6c22e1
-djangorestframework==3.7.7
+djangorestframework==3.8.2
 #psutil==5.4.3
 #mock==2.0.0
 #backports.tempfile==1.0
-psycopg2==2.7.4
-rsa==3.4.2
+psycopg2-binary==2.7.5
+rsa==4.0
 
 # General requirements for testing
 #selenium==3.5.0
-factory-boy==2.8.1
-
+factory-boy==2.11.1

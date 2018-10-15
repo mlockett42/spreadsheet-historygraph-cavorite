@@ -8,9 +8,9 @@
 # docker volume rm $(docker volume ls --quiet)
 
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
-ENV last_update 20180213
+ENV last_update 20181015
 
 
 # Install required packages
@@ -21,12 +21,12 @@ RUN apt-get update --quiet --yes && apt-get install --quiet --yes --force-yes ca
     python-setuptools \
     #curl \
     #unzip \
-    git \ 
+    git \
     python
 
 # Install required packages
 ADD requirements.txt /root/requirements.txt
-RUN pip install --upgrade pip 
+RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools urllib3[secure]
 RUN pip install -r /root/requirements.txt
 
