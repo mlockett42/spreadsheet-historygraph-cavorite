@@ -24,5 +24,6 @@ class HistoryGraphSerializer(serializers.Serializer):
 
         raise serializers.ValidationError("Incorrectly formatted request")
 
-class HistoryGraphGetSerializer(serializers.Serializer):
-    receipient = serializers.CharField()
+class HistoryGraphLoadSerializer(serializers.Serializer):
+    inbox = serializers.CharField()
+    edges = serializers.CharField()

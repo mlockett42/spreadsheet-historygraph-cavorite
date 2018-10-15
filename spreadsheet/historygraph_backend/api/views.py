@@ -13,11 +13,12 @@ from rest_framework import status
 from rest_framework.mixins import UpdateModelMixin
 import copy
 from django.http import Http404
-from .serializers import HistoryGraphSerializer, HistoryGraphGetSerializer
+from .serializers import HistoryGraphSerializer, HistoryGraphLoadSerializer
 import json
 import hashlib
 import os
 from django.conf import settings
+from spreadsheet.storage import message_media_storage
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -50,3 +51,21 @@ class HistoryGraphListView(APIView):
 
             return Response(file_names)
         return Response([])
+
+class HistoryGraphLoadView(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    def post(self, request, format=None):
+        serializer = HistoryGraphLoadSerializer(data=request.data)
+        if serializer.is_valid():
+            if serializer.validated_data['inbox'] == 'public':
+                full_path = os.path.join(settings.STORAGE_FILES_ROOT, 'public')
+                edges = serializer.validated_data['edges'].split(',')
+                ret = []
+                for edge in edges:
+                    with message_media_storage.open('public/{0}'.format(edge)) as f:
+                        ret.append(f.read())
+            print('HistoryGraphLoadView returning=', ret)
+            return Response(ret)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
